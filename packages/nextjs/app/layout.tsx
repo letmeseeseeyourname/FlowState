@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Providers } from "./providers";
+import { Header } from "./Header";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
@@ -18,8 +19,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" data-theme="dark">
-      <body>
+    <html lang="en" data-theme="dark" suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <Providers>
           <Header />
           {children}
@@ -27,23 +28,5 @@ export default function RootLayout({
         </Providers>
       </body>
     </html>
-  );
-}
-
-function Header() {
-  return (
-    <header className="navbar bg-base-200 shadow-lg">
-      <div className="flex-1">
-        <a href="/" className="btn btn-ghost text-xl font-bold">
-          FlowState
-        </a>
-      </div>
-      <div className="flex-none gap-2">
-        <a href="/mint" className="btn btn-ghost btn-sm">
-          Mint
-        </a>
-        <w3m-button />
-      </div>
-    </header>
   );
 }
