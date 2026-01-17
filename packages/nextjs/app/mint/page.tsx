@@ -69,7 +69,7 @@ export default function MintPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-base-300 via-base-100 to-base-300">
       <div className="card bg-base-100 shadow-2xl max-w-lg">
         <figure className="px-10 pt-10">
-          {/* Preview SVG */}
+          {/* Preview Avatar SVG */}
           <div className="w-64 h-64 rounded-xl overflow-hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -78,31 +78,53 @@ export default function MintPage() {
               viewBox="0 0 400 400"
             >
               <defs>
-                <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" style={{ stopColor: "#95A5A6", stopOpacity: 1 }} />
-                  <stop offset="100%" style={{ stopColor: "#95A5A6", stopOpacity: 0.3 }} />
+                <radialGradient id="bg" cx="50%" cy="30%" r="70%">
+                  <stop offset="0%" style={{ stopColor: "#2a2a4a" }} />
+                  <stop offset="100%" style={{ stopColor: "#1a1a2e" }} />
+                </radialGradient>
+                <radialGradient id="skin" cx="50%" cy="40%" r="50%">
+                  <stop offset="0%" style={{ stopColor: "#ffffff", stopOpacity: 0.125 }} />
+                  <stop offset="100%" style={{ stopColor: "#000000", stopOpacity: 0.125 }} />
                 </radialGradient>
               </defs>
-              <rect width="400" height="400" fill="#1a1a2e" />
-              <circle cx="200" cy="180" r="80" fill="url(#glow)" />
-              <text
-                x="200"
-                y="300"
-                textAnchor="middle"
-                fill="white"
-                fontSize="24"
-                fontFamily="Arial"
-              >
+              <rect width="400" height="400" fill="url(#bg)" />
+              {/* Neck */}
+              <rect x="175" y="210" width="50" height="40" fill="#FFDBB4" />
+              {/* Face */}
+              <ellipse cx="200" cy="160" rx="70" ry="80" fill="#FFDBB4" />
+              <ellipse cx="200" cy="160" rx="70" ry="80" fill="url(#skin)" />
+              {/* Ears */}
+              <ellipse cx="130" cy="160" rx="12" ry="20" fill="#FFDBB4" />
+              <ellipse cx="270" cy="160" rx="12" ry="20" fill="#FFDBB4" />
+              {/* Hair */}
+              <ellipse cx="200" cy="100" rx="75" ry="45" fill="#2C1810" />
+              <rect x="125" y="95" width="150" height="30" fill="#2C1810" />
+              {/* Eyes */}
+              <ellipse cx="170" cy="150" rx="12" ry="14" fill="white" />
+              <ellipse cx="230" cy="150" rx="12" ry="14" fill="white" />
+              <circle cx="172" cy="152" r="6" fill="#1a1a2e" />
+              <circle cx="232" cy="152" r="6" fill="#1a1a2e" />
+              <circle cx="174" cy="150" r="2" fill="white" />
+              <circle cx="234" cy="150" r="2" fill="white" />
+              {/* Eyebrows */}
+              <path d="M155 130 Q170 125 185 130" stroke="#5c4033" strokeWidth="3" fill="none" />
+              <path d="M215 130 Q230 125 245 130" stroke="#5c4033" strokeWidth="3" fill="none" />
+              {/* Nose */}
+              <path d="M200 160 L195 180 Q200 185 205 180 L200 160" fill="#00000015" />
+              {/* Mouth */}
+              <path d="M170 195 Q200 220 230 195" stroke="#c4846c" strokeWidth="4" fill="none" strokeLinecap="round" />
+              {/* Badge */}
+              <circle cx="280" cy="80" r="25" fill="#95A5A6" />
+              <circle cx="280" cy="80" r="20" fill="#1a1a2e" />
+              <circle cx="280" cy="80" r="5" fill="#95A5A6" opacity="0.5" />
+              {/* Shoulders */}
+              <ellipse cx="200" cy="280" rx="90" ry="40" fill="#2a2a4a" />
+              {/* Name plate */}
+              <rect x="100" y="320" width="200" height="60" rx="10" fill="#1a1a2e" stroke="#95A5A6" strokeWidth="2" />
+              <text x="200" y="348" textAnchor="middle" fill="white" fontSize="18" fontFamily="Arial, sans-serif" fontWeight="bold">
                 Idle
               </text>
-              <text
-                x="200"
-                y="340"
-                textAnchor="middle"
-                fill="#95A5A6"
-                fontSize="18"
-                fontFamily="Arial"
-              >
+              <text x="200" y="368" textAnchor="middle" fill="#95A5A6" fontSize="12" fontFamily="Arial, sans-serif">
                 0 interactions
               </text>
             </svg>
