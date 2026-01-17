@@ -23,10 +23,12 @@ export function StateIndicator({
   showEpochCountdown = true,
   size = "md",
 }: StateIndicatorProps) {
-  const [secondsLeft, setSecondsLeft] = useState(60);
+  const [secondsLeft, setSecondsLeft] = useState<number | null>(null);
+  const [mounted, setMounted] = useState(false);
 
-  // Calculate seconds left in current epoch
+  // Only run countdown on client to avoid hydration mismatch
   useEffect(() => {
+    setMounted(true);
     const updateCountdown = () => {
       const now = Math.floor(Date.now() / 1000);
       const epochStart = Math.floor(now / 60) * 60;
@@ -112,7 +114,7 @@ export function StateIndicator({
       )}
 
       {/* Epoch Countdown */}
-      {showEpochCountdown && (
+      {showEpochCountdown && mounted && secondsLeft !== null && (
         <div className="flex items-center gap-2 mt-1">
           <span className="opacity-70">Epoch resets in:</span>
           <span className="countdown font-mono font-bold">
