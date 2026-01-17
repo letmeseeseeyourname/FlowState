@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useAccount } from "wagmi";
 import { useFlowNFTForAddress } from "~~/hooks/flowstate/useFlowNFT";
@@ -11,11 +12,18 @@ import { TipButton } from "~~/components/flowstate/TipButton";
 import { formatEther } from "viem";
 
 export default function ProfilePage() {
+  const [mounted, setMounted] = useState(false);
   const params = useParams();
   const profileAddress = params.address as `0x${string}`;
 
   const { address: connectedAddress } = useAccount();
-  const isOwnProfile = connectedAddress?.toLowerCase() === profileAddress?.toLowerCase();
+
+  // Only check isOwnProfile after mount to avoid hydration mismatch
+  const isOwnProfile = mounted && connectedAddress?.toLowerCase() === profileAddress?.toLowerCase();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const { hasMinted, tokenId, flowState, tokenURI, refetchFlowState } =
     useFlowNFTForAddress(profileAddress);
@@ -140,7 +148,7 @@ export default function ProfilePage() {
             </div>
 
             {/* Interactions (for other profiles) */}
-            {!isOwnProfile && connectedAddress && (
+            {mounted && !isOwnProfile && connectedAddress && (
               <div className="card bg-base-100 shadow-xl">
                 <div className="card-body">
                   <h2 className="card-title">Interact</h2>

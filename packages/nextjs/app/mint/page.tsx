@@ -1,15 +1,20 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAccount } from "wagmi";
 import { useFlowNFT } from "~~/hooks/flowstate/useFlowNFT";
 import { notification } from "~~/utils/scaffold-eth";
 
 export default function MintPage() {
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
   const { address, isConnected } = useAccount();
   const { hasMinted, mint, isMinting, isMintSuccess, tokenURI } = useFlowNFT();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (isMintSuccess) {
@@ -20,6 +25,15 @@ export default function MintPage() {
       }, 1500);
     }
   }, [isMintSuccess, address, router]);
+
+  // Show loading state until mounted to avoid hydration mismatch
+  if (!mounted) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-base-200">
+        <span className="loading loading-spinner loading-lg" />
+      </div>
+    );
+  }
 
   if (!isConnected) {
     return (

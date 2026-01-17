@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useAccount } from "wagmi";
 import { useFlowNFT } from "~~/hooks/flowstate/useFlowNFT";
@@ -7,8 +8,17 @@ import { FlowNFTCard, FlowNFTCardSkeleton } from "~~/components/flowstate/FlowNF
 import { StateIndicator } from "~~/components/flowstate/StateIndicator";
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false);
   const { address, isConnected } = useAccount();
   const { hasMinted, tokenId, flowState, tokenURI } = useFlowNFT();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Use mounted check to avoid hydration mismatch
+  const showConnected = mounted && isConnected;
+  const showMinted = mounted && hasMinted;
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-base-300 via-base-100 to-base-300">
@@ -27,7 +37,7 @@ export default function Home() {
               Like, tip, and watch your NFT transform in real-time.
             </p>
 
-            {!isConnected ? (
+            {!showConnected ? (
               <div className="flex flex-col items-center gap-4">
                 <p className="text-lg">Connect your wallet to get started</p>
                 <div className="animate-bounce">
@@ -47,7 +57,7 @@ export default function Home() {
                   </svg>
                 </div>
               </div>
-            ) : !hasMinted ? (
+            ) : !showMinted ? (
               <Link href="/mint" className="btn btn-primary btn-lg">
                 Mint Your FlowNFT
               </Link>
@@ -63,7 +73,7 @@ export default function Home() {
       </div>
 
       {/* User's NFT Preview */}
-      {isConnected && hasMinted && (
+      {showConnected && showMinted && (
         <div className="container mx-auto px-4 py-12">
           <div className="flex flex-col lg:flex-row items-center justify-center gap-8">
             <FlowNFTCard
